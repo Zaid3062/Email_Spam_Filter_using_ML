@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>VOISShield™ Enterprise Design System & UI/UX Technical Specification v2.0</title>
+ <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&family=Poppins:wght@600;700;800;900&display=swap');
+
+  :root {
+   --primary-red: #E60000;
+   --secondary-violet: #990099;
+   --bg-light: #F8FAFC;
+   --card-light: #FFFFFF;
+   --nested-light: #F1F3F7;
+   --text-dark: #0F172A;
+   --text-muted: #64748B;
+   --border-color: #E2E8F0;
+   --bento-bg: #F0F4F8;
+   --accent-yellow: #FBE6B5;
+  }
+
+  * {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   -webkit-print-color-adjust: exact !important;
+   print-color-adjust: exact !important;
+   color-adjust: exact !important;
+  }
+
+  @page {
+   size: A4 portrait;
+   margin: 14mm 16mm 14mm 16mm;
+  }
+
+  body {
+   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+   color: var(--text-dark);
+   background: #FFFFFF;
+   line-height: 1.5;
+   font-size: 12px;
+   padding: 30px;
+   max-width: 960px;
+   margin: 0 auto;
+  }
+
+  @media print {
+   body {
+    padding: 0;
+    max-width: 100%;
+    font-size: 11px;
+   }
+   .page-break {
+    page-break-before: always;
+   }
+   .avoid-break {
+    page-break-inside: avoid;
+   }
+  }
+
+  /* Logo Typography */
+  .font-voda-exb {
+   font-family: 'Vodafone ExB', 'Vodafone', 'Montserrat', 'Plus Jakarta Sans', sans-serif;
+   font-weight: 900;
+  }
+
+  .font-button-title {
+   font-family: 'Poppins', 'Plus Jakarta Sans', sans-serif;
+   font-weight: 800;
+  }
+
+  /* Header */
+  header.doc-header {
+   border-bottom: 3px solid var(--primary-red);
+   padding-bottom: 16px;
+   margin-bottom: 24px;
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-end;
+  }
+
+  .logo-container {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+  }
+
+  .logo-badge {
+   width: 32px;
+   height: 32px;
+   border-radius: 8px;
+   background: rgba(230, 0, 0, 0.12);
+   border: 1px solid rgba(230, 0, 0, 0.3);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: #E60000;
+   font-weight: 900;
+   font-size: 18px;
+  }
+
+  .brand-logo-text {
+   font-size: 26px;
+   line-height: 1;
+   letter-spacing: -0.04em;
+  }
+
+  .brand-logo-text .vois {
+   color: #0F172A;
+  }
+
+  .brand-logo-text .shield {
+   background: linear-gradient(90deg, #E60000 0%, #990099 100%);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   color: #990099;
+  }
+
+  .brand-logo-text .dot {
+   color: #0F172A;
+  }
+
+  .doc-meta {
+   text-align: right;
+   font-size: 10px;
+   color: var(--text-muted);
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 0.05em;
+  }
+
+  .doc-meta .version-badge {
+   display: inline-block;
+   background: var(--primary-red);
+   color: #FFFFFF;
+   font-weight: 900;
+   padding: 2px 7px;
+   border-radius: 4px;
+   letter-spacing: 0.06em;
+   margin-bottom: 3px;
+  }
+
+  /* Headings */
+  h1 {
+   font-size: 17px;
+   font-weight: 900;
+   color: #0F172A;
+   margin: 24px 0 12px;
+   border-left: 4px solid var(--primary-red);
+   padding-left: 10px;
+   text-transform: uppercase;
+   letter-spacing: -0.01em;
+  }
+
+  h2 {
+   font-size: 13.5px;
+   font-weight: 800;
+   color: #1E293B;
+   margin: 16px 0 8px;
+  }
+
+  h3 {
+   font-size: 12px;
+   font-weight: 700;
+   color: #334155;
+   margin: 12px 0 6px;
+  }
+
+  p, li {
+   color: #334155;
+   margin-bottom: 8px;
+   font-size: 11.5px;
+  }
+
+  ul {
+   margin-left: 18px;
+   margin-bottom: 12px;
+  }
+
+  /* Tables */
+  table {
+   width: 100%;
+   border-collapse: collapse;
+   margin: 10px 0 16px;
+   font-size: 11px;
+  }
+
+  th, td {
+   border: 1px solid var(--border-color);
+   padding: 6px 10px;
+   text-align: left;
+   vertical-align: middle;
+  }
+
+  th {
+   background: #F1F5F9 !important;
+   font-weight: 800;
+   color: #0F172A;
+   font-size: 10.5px;
+   text-transform: uppercase;
+   letter-spacing: 0.03em;
+  }
+
+  tr:nth-child(even) td {
+   background: #F8FAFC !important;
+  }
+
+  /* Code Snippets */
+  pre {
+   background: #0B1121 !important;
+   color: #F8FAFC;
+   padding: 10px 14px;
+   border-radius: 6px;
+   font-family: 'JetBrains Mono', monospace;
+   font-size: 10.5px;
+   line-height: 1.45;
+   white-space: pre-wrap !important;
+   word-break: break-word !important;
+   margin: 8px 0 14px;
+   border: 1px solid #1E293B;
+  }
+
+  code {
+   font-family: 'JetBrains Mono', monospace;
+   font-size: 10.5px;
+  }
+
+  p code, li code, td code {
+   background: #F1F5F9 !important;
+   color: #E60000;
+   padding: 1px 4px;
+   border-radius: 4px;
+   font-weight: 600;
+   border: 1px solid #E2E8F0;
+  }
+
+  /* Color Swatches */
+  .color-chip {
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   font-family: 'JetBrains Mono', monospace;
+   font-size: 10.5px;
+   font-weight: 600;
+   background: #FFFFFF !important;
+   padding: 2px 6px;
+   border-radius: 4px;
+   border: 1px solid #CBD5E1;
+  }
+
+  .swatch {
+   width: 12px;
+   height: 12px;
+   border-radius: 3px;
+   display: inline-block;
+   border: 1px solid rgba(0,0,0,0.2);
+  }
+
+  /* Containers */
+  .info-card {
+   background: #F8FAFC !important;
+   border: 1px solid var(--border-color);
+   border-radius: 8px;
+   padding: 12px 14px;
+   margin: 10px 0;
+  }
+
+  .grid-2col {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 12px;
+   margin: 10px 0;
+  }
+
+  .grid-4col {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 12px;
+   margin: 14px 0;
+  }
+
+  /* ========================================================================= */
+  /* SECTION 10: L-SHAPED BENTO COMPONENTS STYLING                             */
+  /* ========================================================================= */
+  .bento-showcase-wrapper {
+   background: #F8FAFC;
+   border: 1px solid var(--border-color);
+   border-radius: 12px;
+   padding: 20px;
+   margin: 16px 0 20px;
+  }
+
+  /* Live Component Replica from Reference Image */
+  .ref-bento-unit {
+   max-width: 540px;
+   margin: 0 auto;
+   display: grid;
+   grid-template-columns: 240px 1fr;
+   grid-template-rows: auto auto;
+   gap: 12px;
+   background: transparent;
+  }
+
+  .ref-isolated-card {
+   grid-column: 1;
+   grid-row: 1;
+   background: #FBE6B5;
+   border-radius: 18px;
+   padding: 22px 20px;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  }
+
+  .ref-isolated-card .badge-title {
+   font-family: 'Poppins', sans-serif;
+   font-size: 20px;
+   font-weight: 900;
+   color: #0F172A;
+   letter-spacing: -0.01em;
+   margin-bottom: 14px;
+   text-transform: uppercase;
+  }
+
+  .ref-isolated-card .badge-desc {
+   font-size: 13px;
+   font-weight: 500;
+   color: #1E293B;
+   line-height: 1.35;
+  }
+
+  .ref-l-host-container {
+   grid-column: 2;
+   grid-row: 1 / span 2;
+   background: #F0F4F8;
+   border-radius: 20px;
+   padding: 22px;
+   display: flex;
+   flex-direction: column;
+  }
+
+  /* To represent the interlocking L-card correctly in grid */
+  .ref-combo-interlock {
+   max-width: 560px;
+   margin: 10px auto 20px;
+   position: relative;
+   background: #F0F4F8;
+   border-radius: 24px;
+   padding: 16px;
+  }
+
+  .ref-l-bracket-grid {
+   display: grid;
+   grid-template-columns: 1.1fr 1fr;
+   grid-template-rows: 150px auto;
+   gap: 14px;
+  }
+
+  .notch-docked-isolated {
+   grid-column: 1;
+   grid-row: 1;
+   background: #FBE7B5;
+   border-radius: 16px;
+   padding: 18px;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+  }
+
+  .notch-docked-isolated h4 {
+   font-family: 'Poppins', sans-serif;
+   font-size: 22px;
+   font-weight: 900;
+   color: #0A0F1D;
+   letter-spacing: -0.02em;
+   margin-bottom: 12px;
+  }
+
+  .notch-docked-isolated p {
+   font-size: 13.5px;
+   color: #1E293B;
+   line-height: 1.3;
+   font-weight: 500;
+  }
+
+  .l-upper-stem {
+   grid-column: 2;
+   grid-row: 1;
+   padding: 4px 10px 10px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+  }
+
+  .l-upper-stem .stem-title {
+   font-family: 'Poppins', sans-serif;
+   font-size: 18px;
+   font-weight: 900;
+   color: #0A0F1D;
+   letter-spacing: -0.01em;
+   line-height: 1.15;
+   text-transform: uppercase;
+  }
+
+  .l-upper-stem .stem-counter {
+   font-size: 40px;
+   font-weight: 900;
+   color: #0A0F1D;
+   line-height: 1;
+   margin: 4px 0 8px;
+  }
+
+  .l-upper-stem .stem-meta {
+   font-size: 11px;
+   font-weight: 500;
+   color: #64748B;
+  }
+
+  .l-bottom-shelf {
+   grid-column: 1 / span 2;
+   grid-row: 2;
+   padding: 10px 12px 12px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 14px;
+  }
+
+  .stepper-input-bar {
+   width: 100%;
+   background: #FFFFFF;
+   border-radius: 12px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 6px 14px;
+   border: 1px solid #E2E8F0;
+   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  .stepper-input-bar .stepper-value {
+   font-size: 17px;
+   font-weight: 800;
+   color: #0F172A;
+   padding-left: 12px;
+  }
+
+  .stepper-controls {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   background: #F1F5F9;
+   padding: 5px 12px;
+   border-radius: 8px;
+   font-weight: 800;
+   color: #1E293B;
+  }
+
+  .stepper-btn {
+   cursor: pointer;
+   user-select: none;
+   font-size: 16px;
+  }
+
+  .stepper-separator {
+   color: #94A3B8;
+   font-weight: 400;
+  }
+
+  .btn-bento-action {
+   background: #2D333E;
+   color: #FFFFFF;
+   font-family: 'Poppins', sans-serif;
+   font-weight: 800;
+   font-size: 13.5px;
+   letter-spacing: 0.04em;
+   text-transform: uppercase;
+   padding: 10px 42px;
+   border-radius: 10px;
+   border: none;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  }
+
+  /* Diagram Cards for 4 Orientations */
+  .orientation-card {
+   background: #FFFFFF;
+   border: 1px solid var(--border-color);
+   border-radius: 10px;
+   padding: 12px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+  }
+
+  .orientation-card .diag-title {
+   font-weight: 800;
+   font-size: 10.5px;
+   color: #0F172A;
+   margin-bottom: 2px;
+   text-transform: uppercase;
+  }
+
+  .orientation-card .diag-sub {
+   font-size: 9.5px;
+   color: var(--text-muted);
+   margin-bottom: 8px;
+  }
+
+  .diagram-box {
+   width: 100%;
+   aspect-ratio: 1.25 / 1;
+   background: #F8FAFC;
+   border: 1.5px dashed #CBD5E1;
+   border-radius: 8px;
+   position: relative;
+   padding: 6px;
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   grid-template-rows: 1fr 1fr;
+   gap: 5px;
+  }
+
+  .l-fill {
+   background: #E2E8F0;
+   border: 1px solid #94A3B8;
+   border-radius: 6px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: 'JetBrains Mono', monospace;
+   font-weight: 700;
+   font-size: 9px;
+   color: #334155;
+  }
+
+  .isolated-fill {
+   background: #FEE7B8;
+   border: 1.5px solid #F59E0B;
+   border-radius: 6px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   font-family: 'JetBrains Mono', monospace;
+   font-weight: 800;
+   font-size: 8.5px;
+   color: #78350F;
+  }
+
+  /* Specific Orientations for Diagrams */
+  /* 1. Bottom-Right L-Shape (Isolated Top-Left) */
+  .grid-diag-br .iso-cell { grid-column: 1; grid-row: 1; }
+  .grid-diag-br .l-stem-v { grid-column: 2; grid-row: 1; }
+  .grid-diag-br .l-base-h { grid-column: 1 / span 2; grid-row: 2; }
+
+  /* 2. Bottom-Left L-Shape (Isolated Top-Right) */
+  .grid-diag-bl .iso-cell { grid-column: 2; grid-row: 1; }
+  .grid-diag-bl .l-stem-v { grid-column: 1; grid-row: 1; }
+  .grid-diag-bl .l-base-h { grid-column: 1 / span 2; grid-row: 2; }
+
+  /* 3. Top-Right L-Shape (Isolated Bottom-Left) */
+  .grid-diag-tr .l-base-h { grid-column: 1 / span 2; grid-row: 1; }
+  .grid-diag-tr .iso-cell { grid-column: 1; grid-row: 2; }
+  .grid-diag-tr .l-stem-v { grid-column: 2; grid-row: 2; }
+
+  /* 4. Top-Left L-Shape (Isolated Bottom-Right) */
+  .grid-diag-tl .l-base-h { grid-column: 1 / span 2; grid-row: 1; }
+  .grid-diag-tl .l-stem-v { grid-column: 1; grid-row: 2; }
+  .grid-diag-tl .iso-cell { grid-column: 2; grid-row: 2; }
+ </style>
+</head>
+<body>
+
+ <!-- ========================================================================= -->
+ <!-- HEADER & LOGO                                                             -->
+ <!-- ========================================================================= -->
+ <header class="doc-header">
+  <div class="logo-container">
+   <div class="logo-badge">🛡️</div>
+   <div class="brand-logo-text font-voda-exb">
+    <span class="vois">VOIS</span><span class="shield">Shield</span><span class="dot">.</span>
+   </div>
+  </div>
+  <div class="doc-meta">
+   <div><span class="version-badge">RELEASE V2.0</span></div>
+   Design System & UI/UX Technical Spec<br />
+   <strong>v2.0.0</strong> | Enterprise Bento Specification
+  </div>
+ </header>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 1: OVERVIEW                                                       -->
+ <!-- ========================================================================= -->
+ <h1>1. Executive Overview & Design Philosophy</h1>
+ <p><strong>VOISShield</strong> is an intelligent enterprise human-firewall platform designed for threat simulations, automated micro-learning, employee engagement scoring, and security analytics.</p>
+
+ <div class="info-card">
+  <p><strong>Core Architectural Standards:</strong></p>
+  <ul>
+   <li><strong>Dual-Theme Parity:</strong> Strict 1:1 color token mirroring between Light Mode (Ceramic & Slate) and Dark Mode (Obsidian & Charcoal).</li>
+   <li><strong>Interlocking Bento Grids (L-Containers):</strong> Multi-tier cards connected with mathematical bezier fillets (<code>r = 16px</code>) for structured telemetry clustering without gaps.</li>
+   <li><strong>Proportional Normalized Zoom:</strong> Global canvas scaling locked via <code>VarHomeScreenScale = 0.92</code> to maintain unified dashboard geometry on standard laptops and widescreen monitors.</li>
+  </ul>
+ </div>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 2: LOGO SPECIFICATION                                             -->
+ <!-- ========================================================================= -->
+ <h1>2. Brand Identity & Logo Architecture</h1>
+ <p>The brand mark uses the custom Vodafone Extra Bold typography stack with strict gradient stop rules:</p>
+
+ <table>
+  <thead>
+   <tr>
+    <th>Context</th>
+    <th>Size</th>
+    <th>Typography Stack</th>
+    <th>Color Specs (Light / Dark)</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong>Global Top Header</strong></td>
+    <td><code>18px</code></td>
+    <td><code>font-voda-exb (Montserrat 900)</code></td>
+    <td><code>VOIS</code>: #0F172A / #FFFFFF &bull; <code>Shield</code>: Gradient #E60000 &rarr; #990099</td>
+   </tr>
+   <tr>
+    <td><strong>Hero Landmark</strong></td>
+    <td><code>65px</code></td>
+    <td><code>font-voda-exb (Montserrat 900)</code></td>
+    <td><code>VOIS</code>: #0F172A / #FFFFFF &bull; <code>Shield</code>: Gradient #E60000 &rarr; #990099</td>
+   </tr>
+   <tr>
+    <td><strong>Know More Modal</strong></td>
+    <td><code>48px</code></td>
+    <td><code>font-voda-exb (Montserrat 900)</code></td>
+    <td><code>VOIS</code>: #FFFFFF (Inverted) / #000000 &bull; <code>Shield</code>: Gradient #E60000 &rarr; #990099</td>
+   </tr>
+   <tr>
+    <td><strong>Footer Brand Lockup</strong></td>
+    <td><code>18px</code></td>
+    <td><code>font-voda-exb (Montserrat 900)</code></td>
+    <td>Horizontal lockup with <code>Powered by AIDA</code> metadata</td>
+   </tr>
+  </tbody>
+ </table>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 3: COMPREHENSIVE COLOR MATRIX                                     -->
+ <!-- ========================================================================= -->
+ <h1>3. Comprehensive Color Matrix</h1>
+
+ <h3>3.1 Functional & Brand Accent Tokens</h3>
+ <table>
+  <thead>
+   <tr>
+    <th>Token Name</th>
+    <th>Hex Code & Swatch</th>
+    <th>Functional Application</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong>Primary Brand Red</strong></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#E60000;"></span>#E60000</span></td>
+    <td>Core Vodafone accent, Section header indicator bars, Active indicators</td>
+   </tr>
+   <tr>
+    <td><strong>Secondary Violet</strong></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#990099;"></span>#990099</span></td>
+    <td>Brand gradient secondary end-stop, Sparkles badge accent</td>
+   </tr>
+   <tr>
+    <td><strong>Live / Safe Green</strong></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#22C55E;"></span>#22C55E</span></td>
+    <td>Live status badge, Reported progress arcs, Active campaign counters</td>
+   </tr>
+   <tr>
+    <td><strong>Telemetry Cyan</strong></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#45D8B8;"></span>#45D8B8</span></td>
+    <td>Security Fitness Donut - Report Rate slice (50.2%)</td>
+   </tr>
+   <tr>
+    <td><strong>Phish Danger Coral</strong></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#F87171;"></span>#F87171</span></td>
+    <td>Security Fitness Donut - Hook Rate slice (24.6%)</td>
+   </tr>
+   <tr>
+    <td><strong>High-Risk Pink</strong></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#FB7185;"></span>#FB7185</span></td>
+    <td>Compromised metric ring, Opened/Read bar, Overall Hook Rate gauge</td>
+   </tr>
+   <tr>
+    <td><strong>No-Interaction Indigo</strong></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#818CF8;"></span>#818CF8</span></td>
+    <td>Security Fitness Donut - No Interaction slice (25.2%)</td>
+   </tr>
+   <tr>
+    <td><strong>Reach Purple</strong></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#C084FC;"></span>#C084FC</span></td>
+    <td>Mini Donut - Email Reach Rate gauge (100%)</td>
+   </tr>
+   <tr>
+    <td><strong>Warning Amber Butter</strong></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#FBE7B5;"></span>#FBE7B5</span></td>
+    <td>Isolated event trigger block (Opened / Hooked status pills)</td>
+   </tr>
+  </tbody>
+ </table>
+
+ <h3>3.2 Theme Surface Mapping</h3>
+ <table>
+  <thead>
+   <tr>
+    <th>Surface Token</th>
+    <th>Light Mode (HEX)</th>
+    <th>Dark Mode (HEX)</th>
+    <th>Usage Context</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><code>bg-app-root</code></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#F8FAFC;"></span>#F8FAFC</span></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#030403;"></span>#030403</span></td>
+    <td>Root viewport body background</td>
+   </tr>
+   <tr>
+    <td><code>bg-card-primary</code></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#FFFFFF;"></span>#FFFFFF</span></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#15161A;"></span>#15161A</span></td>
+    <td>Bento container wrappers (Column 1 & 2)</td>
+   </tr>
+   <tr>
+    <td><code>bg-card-nested</code></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#F1F3F7;"></span>#F1F3F7</span></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#202127;"></span>#202127</span></td>
+    <td>Sub-cards, L-shape heads, footer bars, map bases</td>
+   </tr>
+   <tr>
+    <td><code>bg-card-subtle</code></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#FFFFFF;"></span>#FFFFFF</span></td>
+    <td><span class="color-chip"><span class="swatch" style="background:#25252B;"></span>#25252B</span></td>
+    <td>Quick Access button cards, Location data pills</td>
+   </tr>
+   <tr>
+    <td><code>border-subtle</code></td>
+    <td><code>rgba(0,0,0,0.08)</code></td>
+    <td><code>rgba(255,255,255,0.06)</code></td>
+    <td>Standard card division boundaries</td>
+   </tr>
+  </tbody>
+ </table>
+
+ <div class="page-break"></div>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 4: TYPOGRAPHY                                                     -->
+ <!-- ========================================================================= -->
+ <h1>4. Typography & Font Specifications</h1>
+ <pre><code>/* Global Injected Font Stack */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@800;900&family=Plus+Jakarta+Sans:wght@800;900&family=Poppins:wght@700;800&display=swap');
+
+.font-voda-exb {
+ font-family: 'Vodafone ExB', 'Montserrat', 'Plus Jakarta Sans', sans-serif;
+ font-weight: 900;
+}
+.font-button-title {
+ font-family: 'Poppins', 'Plus Jakarta Sans', sans-serif;
+ font-weight: 800;
+}</code></pre>
+
+ <table>
+  <thead>
+   <tr>
+    <th>Role</th>
+    <th>Size</th>
+    <th>Weight</th>
+    <th>Line-Height</th>
+    <th>Tracking</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong>Hero Display H1</strong></td>
+    <td><code>65px</code></td>
+    <td>900</td>
+    <td><code>1.0 (none)</code></td>
+    <td><code>-0.05em</code></td>
+   </tr>
+   <tr>
+    <td><strong>Bento Section Headers</strong></td>
+    <td><code>16px</code></td>
+    <td>900</td>
+    <td><code>1.12</code></td>
+    <td><code>+0.05em (uppercase)</code></td>
+   </tr>
+   <tr>
+    <td><strong>KPI Master Digits</strong></td>
+    <td><code>22px</code></td>
+    <td>900</td>
+    <td><code>1.0</code></td>
+    <td><code>-0.02em</code></td>
+   </tr>
+   <tr>
+    <td><strong>Metric Digits (Sub-cards)</strong></td>
+    <td><code>15px</code></td>
+    <td>900</td>
+    <td><code>1.0</code></td>
+    <td><code>normal</code></td>
+   </tr>
+   <tr>
+    <td><strong>Quick Access Titles</strong></td>
+    <td><code>14px</code></td>
+    <td>900</td>
+    <td><code>1.05</code></td>
+    <td><code>+0.02em (uppercase)</code></td>
+   </tr>
+   <tr>
+    <td><strong>General UI Labels</strong></td>
+    <td><code>11px</code></td>
+    <td>700</td>
+    <td><code>1.2</code></td>
+    <td><code>normal</code></td>
+   </tr>
+   <tr>
+    <td><strong>Data Pills / Meta Text</strong></td>
+    <td><code>9px</code></td>
+    <td>700 / 600</td>
+    <td><code>1.1</code></td>
+    <td><code>normal</code></td>
+   </tr>
+  </tbody>
+ </table>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 5: NAVIGATION & HEADER                                            -->
+ <!-- ========================================================================= -->
+ <h1>5. Global Navigation & Header Systems</h1>
+  
+ <div class="grid-2col">
+  <div class="info-card">
+   <p><strong>Top Global Header (Fixed):</strong></p>
+   <ul>
+    <li><strong>Height:</strong> <code>50px</code>, <code>z-50</code>, <code>backdrop-blur-md</code>.</li>
+    <li><strong>Theme Pill:</strong> <code>w-14 h-7 p-1 rounded-full</code> with active toggle switch.</li>
+    <li><strong>Contact Tag:</strong> <code>text-[10px] text-slate-500 font-semibold</code>.</li>
+   </ul>
+  </div>
+  <div class="info-card">
+   <p><strong>Left Vertical Sidebar:</strong></p>
+   <ul>
+    <li><strong>Collapsed:</strong> <code>w-[60px]</code> (icon only).</li>
+    <li><strong>Expanded:</strong> <code>w-[240px]</code> with labels.</li>
+    <li><strong>Active Item:</strong> <code>bg-[#FFEBEF] text-[#E60000]</code> (Light) / <code>bg-[#3A0D16] text-[#FF4D4D]</code> (Dark).</li>
+   </ul>
+  </div>
+ </div>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 6: QUICK ACCESS 3D BUTTONS                                        -->
+ <!-- ========================================================================= -->
+ <h1>6. 3D Embossed Quick Access Cards (Uiverse3DCard)</h1>
+ <p>The Quick Access buttons on the left panel feature 3D stepped concentric discs and floating circular icon badges:</p>
+
+ <table>
+  <thead>
+   <tr>
+    <th>Theme Name</th>
+    <th>Light Mode (Card / Fill / Badge)</th>
+    <th>Dark Mode (Card / Fill / Badge)</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong>Red (New Campaign)</strong></td>
+    <td>Card: <code>#FFFFFF</code> &bull; Disc: <code>#FBB9C5</code> &bull; Badge: <code>#FF657F &rarr; #FBB9C5</code></td>
+    <td>Card: <code>#25252B</code> &bull; Disc: <code>#FBB9C5</code> &bull; Badge: <code>#FF657F &rarr; #FBB9C5</code></td>
+   </tr>
+   <tr>
+    <td><strong>Purple (Create Scenario)</strong></td>
+    <td>Card: <code>#FFFFFF</code> &bull; Disc: <code>#E2CAF9</code> &bull; Badge: <code>#E2CAF9 &rarr; #9D70E6</code></td>
+    <td>Card: <code>#25252B</code> &bull; Disc: <code>#E2CAF9</code> &bull; Badge: <code>#E2CAF9 &rarr; #9D70E6</code></td>
+   </tr>
+   <tr>
+    <td><strong>Mint (My Space)</strong></td>
+    <td>Card: <code>#FFFFFF</code> &bull; Disc: <code>#BDF7D1</code> &bull; Badge: <code>#4BE184 &rarr; #BDF7D1</code></td>
+    <td>Card: <code>#25252B</code> &bull; Disc: <code>#BDF7D1</code> &bull; Badge: <code>#4BE184 &rarr; #BDF7D1</code></td>
+   </tr>
+  </tbody>
+ </table>
+
+ <pre><code>/* Concentric Step-Discs SVG Definition (Controlled via VarFadedStepDiscScale = 0.85) */
+&lt;svg viewBox="0 0 140 140" className="absolute -top-3 -right-3 w-36 h-36"&gt;
+ &lt;circle cx="110" cy="30" r="52" fill={t.fillColor} fillOpacity={isDark ? "0.22" : "0.35"} /&gt;
+ &lt;circle cx="110" cy="30" r="34" fill={t.fillColor} fillOpacity={isDark ? "0.35" : "0.50"} /&gt;
+ &lt;circle cx="110" cy="30" r="18" fill={t.fillColor} fillOpacity={isDark ? "0.55" : "0.75"} /&gt;
+&lt;/svg&gt;</code></pre>
+
+ <div class="page-break"></div>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 7: BENTO L-CONTAINERS                                             -->
+ <!-- ========================================================================= -->
+ <h1>7. Interlocking Bento L-Shape Containers</h1>
+ <p>To eliminate visible seams during container contraction, concave bezier arc fillets bridge the bisection corners:</p>
+
+ <div class="info-card">
+  <p><strong>Concave Bezier Arc Math:</strong></p>
+  <pre><code>/* Concave Arc Path: (Top-Head to Bottom-Foot Junction) */
+&lt;svg className="absolute bottom-0 -right-4 w-4 h-4 pointer-events-none z-20" viewBox="0 0 16 16" fill="none"&gt;
+ &lt;path d="M 0,0 A 16,16 0 0 0 16,16 H 0 Z" fill={isDark ? "#202127" : "#F1F3F7"} /&gt;
+&lt;/svg&gt;
+
+/* Top-Right Fillet: (Emails Sent to Campaign Details Junction) */
+&lt;svg className="absolute top-0 -right-4 w-4 h-4 pointer-events-none z-20" viewBox="0 0 16 16" fill="none"&gt;
+ &lt;path d="M 0,0 H 16 A 16,16 0 0 0 0,16 Z" fill={isDark ? "#202127" : "#F1F3F7"} /&gt;
+&lt;/svg&gt;</code></pre>
+ </div>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 8: DATA VISUALIZATIONS                                            -->
+ <!-- ========================================================================= -->
+ <h1>8. Telemetry & Data Visualizations</h1>
+
+ <h3>8.1 Security Fitness Multi-Segment Donut Chart</h3>
+ <ul>
+  <li><strong>Circumference:</strong> <code>2 &times; &pi; &times; 48 &approx; 301.59px</code></li>
+  <li><strong>Report Rate (50.2%):</strong> Color <code>#45D8B8</code>, rotation <code>-60deg</code></li>
+  <li><strong>Hook Rate (24.6%):</strong> Color <code>#F87171</code>, rotation <code>120.7deg</code></li>
+  <li><strong>No Interaction (25.2%):</strong> Color <code>#818CF8</code>, rotation <code>209.3deg</code></li>
+  <li><strong>Loop Overlap Cap:</strong> <code>0.1px</code> arc overlay cap at <code>-60deg</code> to hide round cap seam artifacts.</li>
+ </ul>
+
+ <h3>8.2 Mini Progress Gauges (MiniDonutGauge)</h3>
+ <ul>
+  <li><strong>Radius:</strong> <code>31px</code>, <strong>Stroke:</strong> <code>7px</code>.</li>
+  <li><strong>Colors:</strong> Reach Rate <code>#C084FC</code> (100%), Open Rate <code>#22C55E</code> (88%), Compromised Rate <code>#FB7185</code> (12%), Trained Rate <code>#22C55E</code> (77%).</li>
+ </ul>
+
+ <h3>8.3 GeoMercator Map Configuration</h3>
+ <pre><code>&lt;ComposableMap
+ projection="geoMercator"
+ projectionConfig={{ scale: 500, center: [10, 38] }}
+ style={{ width: "100%", height: "100%", borderRadius: "12px", overflow: "hidden" }}
+&gt;
+ {/* Dark: fill="#454D4D", stroke="#1A1C22" | Light: fill="#CBD5E1", stroke="#FFFFFF" */}
+&lt;/ComposableMap&gt;</code></pre>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 9: DEVELOPER RULES & CONSTANTS                                    -->
+ <!-- ========================================================================= -->
+ <h1>9. Developer Rules & Global Scale Constants</h1>
+ <div class="info-card">
+  <p>All developers must modify canvas scale through the top configuration variables:</p>
+  <pre><code>export const VarHomeScreenScale = 0.92;     // Scales entire Dashboard canvas
+export const VarSection2HeightAdjuster = 1.30;  // Controls Section 2 vertical stretch
+export const VarFadedStepDiscScale = 0.85;    // Scales 3D Quick Access button ripples
+export const VarLandingPageScale = 1.00;     // Controls Landing Page presentation scale</code></pre>
+ </div>
+
+ <div class="info-card">
+  <p><strong>Strict Engineering Rules:</strong></p>
+  <ul>
+   <li><strong>Locked Heights:</strong> The main dashboard column heights are strictly locked (<code>h-[645px]</code>) so sidebar expansion only resizes width, never height.</li>
+   <li><strong>Text Truncation:</strong> All dynamic metadata text within sub-cards must include <code>truncate</code> and <code>min-w-0</code> on parent flex wrappers to prevent horizontal layout blowout.</li>
+   <li><strong>Theme Initialization:</strong> The app defaults to <strong>Light Mode</strong>. Never read <code>prefers-color-scheme</code> without evaluating <code>localStorage.getItem('theme')</code> first.</li>
+  </ul>
+ </div>
+
+ <div class="page-break"></div>
+
+ <!-- ========================================================================= -->
+ <!-- SECTION 10: CONSISTENT L-SHAPED BENTO CONTAINERS (NEW IN V2.0)            -->
+ <!-- ========================================================================= -->
+ <h1>10. Consistent L-Shaped Bento Containers & Interlocking Isolated Modules</h1>
+
+ <p>In <strong>V2.0</strong>, the entire layout architecture is unified around <strong>Interlocking L-Shaped Bento Hosts</strong> coupled with complementary <strong>Combo Isolated Pieces</strong>. Rather than using conventional uniform rectangular grids, each analytical module uses an asymmetrical L-bracket container that cradles a standalone, high-salience isolated trigger block.</p>
+
+ <div class="info-card">
+  <p><strong>Core Architectural Principles of the L-Shape Bento Combo:</strong></p>
+  <ul>
+   <li><strong>Global App Consistency:</strong> Every major sub-system (Campaign Triggering, Scoring Matrices, Telemetry Drills, and Simulation Execution) is encapsulated within an L-shaped host paired with a dedicated isolated block.</li>
+   <li><strong>The Combo Isolated Piece:</strong> A high-contrast, self-contained sub-card (e.g., event definitions, trigger state pills, badges) docked into the cut-out corner of the L-container. It signals context while the L-container provides metrics and actionable controls.</li>
+   <li><strong>Zero-Dead-Zone Docking:</strong> The inner cut-out corner and outer corner of the host container match the corner radius of the isolated component (<code>radius = 16px to 20px</code>), ensuring perfect visual cohesion.</li>
+   <li><strong>Multi-Quadrant Flexibility:</strong> The L-geometry is invertible across four quadrants (Top-Left, Bottom-Right, Top-Right, Bottom-Left) depending on reading order and data priority.</li>
+  </ul>
+ </div>
+
+ <h2>10.1 Live Production Component Architecture (Reference Implementation)</h2>
+ <p>The live scoring and trigger-weighting card below illustrates the standard production pattern: an <strong>Isolated Status Block ("OPENED")</strong> nested into the top-left notch of an encompassing <strong>L-Shaped Stepper Container</strong>.</p>
+
+ <div class="bento-showcase-wrapper avoid-break">
+  <!-- REPLICA CONTAINER BASED ON USER REFERENCE IMAGE -->
+  <div class="ref-combo-interlock">
+   <div class="ref-l-bracket-grid">
+    
+    <!-- DOCKED ISOLATED PIECE -->
+    <div class="notch-docked-isolated">
+     <h4>OPENED</h4>
+     <p>Triggered when a recipient opens the simulated phishing email</p>
+    </div>
+
+    <!-- UPPER STEM OF THE L-SHAPE CONTAINER -->
+    <div class="l-upper-stem">
+     <div>
+      <div class="stem-title">CURRENT POINTS</div>
+      <div class="stem-counter">0</div>
+     </div>
+     <div class="stem-meta">Last Modified on: 28th January 2026</div>
+    </div>
+
+    <!-- LOWER FOOT/SHELF OF THE L-SHAPE CONTAINER -->
+    <div class="l-bottom-shelf">
+     <div class="stepper-input-bar">
+      <span class="stepper-value">0</span>
+      <div class="stepper-controls">
+       <span class="stepper-btn">&minus;</span>
+       <span class="stepper-separator">|</span>
+       <span class="stepper-btn">&#43;</span>
+      </div>
+     </div>
+     <button class="btn-bento-action" type="button">UPDATE</button>
+    </div>
+
+   </div>
+  </div>
+ </div>
+
+ <h2>10.2 Architectural Orientations of the L-Shaped Bento Grid</h2>
+ <p>To support responsive dashboard compositions across varied data densities, engineers must support all four orientations of the L-container and isolated companion piece:</p>
+
+ <div class="grid-4col avoid-break">
+  <!-- 1. Bottom-Right L-Shape -->
+  <div class="orientation-card">
+   <div class="diag-title">Bottom-Right L</div>
+   <div class="diag-sub">Top-Left Notch (Default)</div>
+   <div class="diagram-box grid-diag-br">
+    <div class="isolated-fill iso-cell">ISOLATED<br/>PIECE</div>
+    <div class="l-fill l-stem-v">STEM (KPI)</div>
+    <div class="l-fill l-base-h">L-BASE / ACTION FOOT</div>
+   </div>
+  </div>
+
+  <!-- 2. Bottom-Left L-Shape -->
+  <div class="orientation-card">
+   <div class="diag-title">Bottom-Left L</div>
+   <div class="diag-sub">Top-Right Notch</div>
+   <div class="diagram-box grid-diag-bl">
+    <div class="l-fill l-stem-v">STEM (KPI)</div>
+    <div class="isolated-fill iso-cell">ISOLATED<br/>PIECE</div>
+    <div class="l-fill l-base-h">L-BASE / ACTION FOOT</div>
+   </div>
+  </div>
+
+  <!-- 3. Top-Right L-Shape -->
+  <div class="orientation-card">
+   <div class="diag-title">Top-Right L</div>
+   <div class="diag-sub">Bottom-Left Notch</div>
+   <div class="diagram-box grid-diag-tr">
+    <div class="l-fill l-base-h">L-HEAD / HEADER SHELF</div>
+    <div class="isolated-fill iso-cell">ISOLATED<br/>PIECE</div>
+    <div class="l-fill l-stem-v">STEM (KPI)</div>
+   </div>
+  </div>
+
+  <!-- 4. Top-Left L-Shape -->
+  <div class="orientation-card">
+   <div class="diag-title">Top-Left L</div>
+   <div class="diag-sub">Bottom-Right Notch</div>
+   <div class="diagram-box grid-diag-tl">
+    <div class="l-fill l-base-h">L-HEAD / HEADER SHELF</div>
+    <div class="l-fill l-stem-v">STEM (KPI)</div>
+    <div class="isolated-fill iso-cell">ISOLATED<br/>PIECE</div>
+   </div>
+  </div>
+ </div>
+
+ <h2>10.3 Component Structural Specification Table</h2>
+ <table>
+  <thead>
+   <tr>
+    <th>Segment</th>
+    <th>Component Role</th>
+    <th>Dimensions & Layout</th>
+    <th>Styling Tokens (Light / Dark)</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong>Isolated Combo Piece</strong></td>
+    <td>Simulation Trigger Definition / Context Card</td>
+    <td>Fixed <code>min-h-[140px]</code>, flex-column, internal padding <code>18px</code></td>
+    <td>Fill: <code>#FBE7B5</code> (Light) / <code>#2E2211</code> (Dark) &bull; Text: <code>#0A0F1D</code> / <code>#FDE68A</code></td>
+   </tr>
+   <tr>
+    <td><strong>L-Container Stem</strong></td>
+    <td>Primary KPI & Metric Readout Zone</td>
+    <td>Auto-width, vertical flex layout, aligned with isolated piece</td>
+    <td>Fill: <code>#F0F4F8</code> (Light) / <code>#1E222B</code> (Dark) &bull; KPI: <code>#0A0F1D</code> (40px Bold)</td>
+   </tr>
+   <tr>
+    <td><strong>L-Container Shelf</strong></td>
+    <td>Interactive Stepper Input & Mutation CTA</td>
+    <td>Spans full grid width (2 columns), gap <code>12px</code></td>
+    <td>Input: <code>#FFFFFF</code> / <code>#15181E</code> &bull; Button: <code>#2D333E</code> with white text</td>
+   </tr>
+   <tr>
+    <td><strong>Interlocking Fillets</strong></td>
+    <td>Seamless geometric alignment</td>
+    <td>Border radius: <code>18px</code> outer, <code>14px</code> nested isolated</td>
+    <td>Gap margin: <code>12px</code> to <code>14px</code> uniform rhythm</td>
+   </tr>
+  </tbody>
+ </table>
+
+ <h2>10.4 CSS Grid Production Code Pattern</h2>
+ <pre><code>/* Responsive Production CSS Grid for L-Shape + Isolated Piece Combo */
+.bento-l-grid-container {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto auto;
+  gap: 14px;
+  background: var(--bento-host-bg, #F0F4F8);
+  border-radius: 20px;
+  padding: 16px;
+}
+
+/* 1. Isolated Complementary Unit (Top-Left Docked) */
+.bento-isolated-item {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  background: #FBE7B5;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+/* 2. L-Container Stem (Top-Right Upper Arm) */
+.bento-l-stem {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 3. L-Container Shelf (Spanning Bottom Foot) */
+.bento-l-shelf {
+  grid-column: 1 / span 2;
+  grid-row: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}</code></pre>
+
+</body>
+</html>
